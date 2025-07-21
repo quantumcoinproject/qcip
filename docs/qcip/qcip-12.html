@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)https://qcip.quantumcoin.org/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>qcip-12 Notarization Infrastructure | QuantumCoin Improvement Proposals</title>
+    <meta property="og:title" content="qcip-12 Notarization Infrastructure | QuantumCoin Improvement Proposals">
+    <meta name="description" content="QuantumCoin Improvement Proposals (QCIPs) propose standards for the QuantumCoin Platform, including core protocol specifications, consensus, and contract standards.">
+    <meta property="og:description" content="QuantumCoin Improvement Proposals (QCIPs) propose standards for the QuantumCoin Platform, including core protocol specifications, client APIs, and contract standards.">
+    <meta name="twitter:description" content="QuantumCoin Improvement Proposals (QCIPs) propose standards for the QuantumCoin Platform, including core protocol specifications, client APIs, and contract standards.">
+    <meta name="generator" content="Mr.Hyde">
+    <meta property="og:locale" content="en_US">
+    <link rel="canonical" href="https://qcip.quantumcoin.org/qcip/qcip-12.html">
+    <meta property="og:url" content="https://qcip.quantumcoin.org/qcip/qcip-12.html">
+    <meta property="og:site_name" content="QuantumCoin Improvement Proposals">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@">
+    <script type="application/ld+json">
+        {
+            "@type": "WebSite",
+            "url": "https://qcip.quantumcoin.org/qcip/qcip-12.html",
+            "name": "qcip-12 Notarization Infrastructure - QuantumCoin Improvement Proposals",
+            "description": "QuantumCoin Improvement Proposals (QCIPs) propose standards for the QuantumCoin platform, including core protocol specifications, client APIs, and contract standards.",
+            "@context": "https://schema.org"
+        }
+    </script>
+    <link rel="stylesheet" href="https://ips.dpdocs.org/assets/style.css"><link href="https://ips.dpdocs.org/assets/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src=https://ips.dpdocs.org/assets/polyfill.min.js"></script>
+    <script src=https://ips.dpdocs.org/assets/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src=https://ips.dpdocs.org/assets/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", (event) => {
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        });
+    </script>
+    <script type="text/javascript">
+        window.MathJax = {
+            loader: {
+                load: ['input/tex-base', 'output/chtml']
+            },
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true,
+                processEnvironments: false,
+                processRefs: false
+            }
+        };
+    </script>
+    <script id="MathJax-script" async="" src=https://ips.dpdocs.org/assets/tex-mml-chtml.js" integrity="sha384-/1zmJ1mBdfKIOnwPxpdG6yaRrxP6qu3eVYm0cz2nOx+AcL4d3AqEFrwcqGZVVroG" crossorigin="anonymous"></script>
+    <script src=https://ips.dpdocs.org/assets/citation.min.js" integrity="sha512-N+LDFMa9owHXGS+CyMrBvuxq2QuGl3fiB/7cys3aUEL7K6P1soHGqsS0sjHXZpwNd9Kz0m3R4IPy1HYRi6ROEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+    .CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+    .CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+    .CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+    </style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+    .CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+    .CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+    .CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+    .CtxtMenu_MenuClose:hover:focus {  outline:none}
+    </style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+    .CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+    .CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+    .CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+    .CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+    .CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+    .CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+    .CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+    .CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+    .CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+    .CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+    .CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+    .CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+    .CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+    .CtxtMenu_MenuDisabled {  color:GrayText}
+    .CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+    .CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+    .CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+    .CtxtMenu_ContextMenu:focus {  outline:none}
+    .CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+    .CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+    </style>
+    <script type="text/javascript">
+        addEventListener('DOMContentLoaded', async () => {
+            const Cite = window.require('citation-js');
+            const citationElements = document.querySelectorAll('.language-csl-json');
+            for (let citationElement of citationElements) {
+                try {
+                    const citation = await Cite.async(citationElement);
+                    const template = document.createElement('template');
+                    template.innerHTML = citation.format('bibliography', {
+                        format: 'html',
+                        template: 'apa',
+                        lang: 'en-US'
+                    });
+                    if (citationElement.parentElement && citationElement.parentElement.matches('pre')) {
+                        citationElement.parentElement.replaceWith(template.content);
+                    } else {
+                        citationElement.replaceWith(template.content);
+                    }
+                } catch (e) {
+                    console.error("unable to render citation", e);
+                }
+            }
+        });
+    </script>
+    <style id="MJX-CHTML-styles">
+        mjx-container[jax="CHTML"] {
+            line-height: 0;
+        }
+
+        mjx-container [space="1"] {
+            margin-left: .111em;
+        }
+
+        mjx-container [space="2"] {
+            margin-left: .167em;
+        }
+
+        mjx-container [space="3"] {
+            margin-left: .222em;
+        }
+
+        mjx-container [space="4"] {
+            margin-left: .278em;
+        }
+
+        mjx-container [space="5"] {
+            margin-left: .333em;
+        }
+
+        mjx-container [rspace="1"] {
+            margin-right: .111em;
+        }
+
+        mjx-container [rspace="2"] {
+            margin-right: .167em;
+        }
+
+        mjx-container [rspace="3"] {
+            margin-right: .222em;
+        }
+
+        mjx-container [rspace="4"] {
+            margin-right: .278em;
+        }
+
+        mjx-container [rspace="5"] {
+            margin-right: .333em;
+        }
+
+        mjx-container [size="s"] {
+            font-size: 70.7%;
+        }
+
+        mjx-container [size="ss"] {
+            font-size: 50%;
+        }
+
+        mjx-container [size="Tn"] {
+            font-size: 60%;
+        }
+
+        mjx-container [size="sm"] {
+            font-size: 85%;
+        }
+
+        mjx-container [size="lg"] {
+            font-size: 120%;
+        }
+
+        mjx-container [size="Lg"] {
+            font-size: 144%;
+        }
+
+        mjx-container [size="LG"] {
+            font-size: 173%;
+        }
+
+        mjx-container [size="hg"] {
+            font-size: 207%;
+        }
+
+        mjx-container [size="HG"] {
+            font-size: 249%;
+        }
+
+        mjx-container [width="full"] {
+            width: 100%;
+        }
+
+        mjx-box {
+            display: inline-block;
+        }
+
+        mjx-block {
+            display: block;
+        }
+
+        mjx-itable {
+            display: inline-table;
+        }
+
+        mjx-row {
+            display: table-row;
+        }
+
+        mjx-row > * {
+            display: table-cell;
+        }
+
+        mjx-mtext {
+            display: inline-block;
+        }
+
+        mjx-mstyle {
+            display: inline-block;
+        }
+
+        mjx-merror {
+            display: inline-block;
+            color: red;
+            background-color: yellow;
+        }
+
+        mjx-mphantom {
+            visibility: hidden;
+        }
+
+        mjx-assistive-mml {
+            position: absolute !important;
+            top: 0px;
+            left: 0px;
+            clip: rect(1px, 1px, 1px, 1px);
+            padding: 1px 0px 0px 0px !important;
+            border: 0px !important;
+            display: block !important;
+            width: auto !important;
+            overflow: hidden !important;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        mjx-assistive-mml[display="block"] {
+            width: 100% !important;
+        }
+
+        mjx-c::before {
+            display: inline-block;
+            width: 0;
+        }
+
+        .mjx-n mjx-c {
+            font-family: MJXZERO, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-i mjx-c {
+            font-family: MJXZERO, MJXTEX-I, MJXTEX-MI, MJXTEX, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-b mjx-c {
+            font-family: MJXZERO, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-b.mjx-i mjx-c {
+            font-family: MJXZERO, MJXTEX-BI, MJXTEX-B, MJXTEX-I, MJXTEX, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-cal mjx-c {
+            font-family: MJXZERO, MJXTEX-C, MJXTEX-I, MJXTEX, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-cal.mjx-b mjx-c {
+            font-family: MJXZERO, MJXTEX-C-B, MJXTEX-C, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-ds mjx-c {
+            font-family: MJXZERO, MJXTEX-A, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-I, MJXTEX-S1;
+        }
+
+        .mjx-fr mjx-c {
+            font-family: MJXZERO, MJXTEX-FR, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-fr.mjx-b mjx-c {
+            font-family: MJXZERO, MJXTEX-FR-B, MJXTEX-FR, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-sc mjx-c {
+            font-family: MJXZERO, MJXTEX-SC, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-sc.mjx-b mjx-c {
+            font-family: MJXZERO, MJXTEX-SC-B, MJXTEX-SC, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-ss mjx-c {
+            font-family: MJXZERO, MJXTEX-SS, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-ss.mjx-b mjx-c {
+            font-family: MJXZERO, MJXTEX-SS-B, MJXTEX-SS, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-ss.mjx-i mjx-c {
+            font-family: MJXZERO, MJXTEX-SS-I, MJXTEX-I, MJXTEX, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-ss.mjx-b.mjx-i mjx-c {
+            font-family: MJXZERO, MJXTEX-SS-B, MJXTEX-SS-I, MJXTEX-BI, MJXTEX-B, MJXTEX-I, MJXTEX, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-ty mjx-c {
+            font-family: MJXZERO, MJXTEX-T, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-var mjx-c {
+            font-family: MJXZERO, MJXTEX-A, MJXTEX, MJXTEX-I, MJXTEX-S1;
+        }
+
+        .mjx-os mjx-c {
+            font-family: MJXZERO, MJXTEX-C, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-os.mjx-b mjx-c {
+            font-family: MJXZERO, MJXTEX-C-B, MJXTEX-C, MJXTEX-B, MJXTEX-BI, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-mit mjx-c {
+            font-family: MJXZERO, MJXTEX-MI, MJXTEX-I, MJXTEX, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-lop mjx-c {
+            font-family: MJXZERO, MJXTEX-S2, MJXTEX-S1, MJXTEX, MJXTEX-I, MJXTEX-A;
+        }
+
+        .mjx-sop mjx-c {
+            font-family: MJXZERO, MJXTEX-S1, MJXTEX, MJXTEX-I, MJXTEX-A;
+        }
+
+        .mjx-s3 mjx-c {
+            font-family: MJXZERO, MJXTEX-S3, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .mjx-s4 mjx-c {
+            font-family: MJXZERO, MJXTEX-S4, MJXTEX, MJXTEX-I, MJXTEX-S1, MJXTEX-A;
+        }
+
+        .MJX-TEX {
+            font-family: MJXZERO;
+        }
+
+        mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+            font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+        }
+
+        @font-face /* 0 */ {
+            font-family: MJXZERO;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+        }
+
+        @font-face /* 1 */ {
+            font-family: MJXTEX;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+        }
+
+        @font-face /* 2 */ {
+            font-family: MJXTEX-B;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+        }
+
+        @font-face /* 3 */ {
+            font-family: MJXTEX-I;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+        }
+
+        @font-face /* 4 */ {
+            font-family: MJXTEX-MI;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+        }
+
+        @font-face /* 5 */ {
+            font-family: MJXTEX-BI;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+        }
+
+        @font-face /* 6 */ {
+            font-family: MJXTEX-S1;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+        }
+
+        @font-face /* 7 */ {
+            font-family: MJXTEX-S2;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+        }
+
+        @font-face /* 8 */ {
+            font-family: MJXTEX-S3;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+        }
+
+        @font-face /* 9 */ {
+            font-family: MJXTEX-S4;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+        }
+
+        @font-face /* 10 */ {
+            font-family: MJXTEX-A;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+        }
+
+        @font-face /* 11 */ {
+            font-family: MJXTEX-C;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+        }
+
+        @font-face /* 12 */ {
+            font-family: MJXTEX-C-B;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+        }
+
+        @font-face /* 13 */ {
+            font-family: MJXTEX-FR;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+        }
+
+        @font-face /* 14 */ {
+            font-family: MJXTEX-FR-B;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+        }
+
+        @font-face /* 15 */ {
+            font-family: MJXTEX-SS;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+        }
+
+        @font-face /* 16 */ {
+            font-family: MJXTEX-SS-B;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+        }
+
+        @font-face /* 17 */ {
+            font-family: MJXTEX-SS-I;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+        }
+
+        @font-face /* 18 */ {
+            font-family: MJXTEX-SC;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+        }
+
+        @font-face /* 19 */ {
+            font-family: MJXTEX-T;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+        }
+
+        @font-face /* 20 */ {
+            font-family: MJXTEX-V;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+        }
+
+        @font-face /* 21 */ {
+            font-family: MJXTEX-VB;
+            src: url("https://cdn.jsdelivr.net/npm/mathjax@3.0.1/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+        }
+    </style></head>
+<body><header class="site-header" role="banner" style="border-top:none;">
+    <div class="wrapper">
+        <img src="https://downloads.quantumcoin.org/quantum-coin-icon.png" style="max-width:75px;max-height:75px;" alt="QuantumCoin Platform" />
+        <a class="site-title" rel="author" href="https://qcip.quantumcoin.org/">QuantumCoin Improvement Proposals</a><nav class="site-nav d-flex">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
+        <label for="nav-trigger">
+        <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+                <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"></path>
+            </svg>
+        </span>
+        </label>
+        <div class="trigger row p-2">
+            <a class="page-link col" href="https://qcip.quantumcoin.org/consensus.html">Consensus</a>
+            <a class="page-link col" href="https://qcip.quantumcoin.org/payments.html">Payments</a>
+            <a class="page-link col" href="https://qcip.quantumcoin.org/platform.html">Platform</a>
+            <a class="page-link col" href="https://qcip.quantumcoin.org/cryptography.html">Cryptography</a>
+            <a class="page-link col" href="https://qcip.quantumcoin.org/transactions.html">Transactions</a>
+        </div>
+    </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+    <div class="wrapper">
+        <div class="home">
+            <span class="h5">
+                <a class="badge text-light bg-primary" data-bs-toggle="tooltip" data-bs-title="Cryptography" href="https://qcip.quantumcoin.org/platform.html">platform</a>
+            </span>
+            <h1 class="page-heading">
+                qcip-12: Notarization Infrastructure
+                <a href="" class="no-underline">
+                    <svg role="img" aria-label="Discuss" class="inline-svg" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                        <use xlink:href="#bi-chat"></use>
+                    </svg>
+                </a>
+                <a href="https://github.com/quantumcoinproject/qcip" class="no-underline">
+                    <svg role="img" aria-label="Source" class="inline-svg" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                        <use xlink:href="#bi-code"></use>
+                    </svg>
+                </a>
+            </h1>
+            <h3></h3>
+            <table class="table table-borderless preamble">
+                <tbody>
+                <tr>
+                    <th scope="row">Proposers</th>
+                    <td>Eun</td>
+                </tr>
+                <tr>
+                    <th scope="row">Proposed Via</th>
+                    <td>Discord</td>
+                </tr>
+                <tr>
+                    <th scope="row">Proposed On</th>
+                    <td>02-Jul-2025</td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <div class="toc">
+                <h2>Table of Contents</h2>
+                <ul>
+                    <li><a href="#abstract">Abstract</a></li>
+                    <li><a href="#motivation">Motivation</a></li>
+                </ul>
+            </div>
+            <h3 id="abstract">
+                <a href="#abstract" class="anchor-link"></a> Abstract
+            </h3>
+            <p>
+                Enable expansion into notarization infrastructure.</p>
+            <h3 id="motivation">
+                <a href="#motivation" class="anchor-link"></a> Motivation
+            </h3>
+            <p>
+                Q is, at its core, a chain that proves digital truth.
+                The PQC signature structure, decentralized consensus, and policy-based algorithm switching structure that Q currently possesses form a foundation that
+                goes beyond a simple dApp chain and enables expansion into notarization infrastructure.
+            </p>
+            <p>
+                The notarization market is a highly stable B2B/B2C demand sector worth hundreds of billions of dollars annually.
+                If Q enters this market, it can secure real-world utility based on survival, rather than short-term speculative demand.
+                Q already structurally satisfies the core requirements of notarization:
+            </p>
+            <p>
+                a) Tamper-proof signatures based on PQC<br/>
+                b) Timestamp assurance through blockchain<br/>
+                c) Decentralized structure and policy-based security transition capability<br/>
+            </p>
+
+                <p>However, to become a true notarization platform, several components need to be added:</p>
+
+            <p>
+                1) Structured Notarization Layer (SNL):<br/>
+                Standardize the message format for notarization (document hash, signer role, intent, etc.) and record it on-chain.
+            </p>
+            <p>
+                2) Quantum TimeProof Oracle (QTO):<br/>
+                Integrate with systems such as NIST CURBy to strengthen legal validity through an absolute timestamp proof structure.
+            </p>
+            <p>
+                3) Multi-PQC Signature Redundancy Layer (SRL):<br/>
+                Introduce a redundancy structure, such as Dilithium + Falcon, to prepare for future quantum hacking threats.
+            </p>
+            <p>
+                4) Notarized Data Verification API (NDV):<br/>
+                Provide an interface that allows external systems to verify document authenticity.
+            </p>
+            <p>
+                5) These four components can be implemented at the smart contract and API levels, and they perfectly align with Q’s core philosophy.
+                Q dominating the notarization market would mean that the legal standard for digital truth is established on Q, and this would represent not just market demand, but the realization of Q’s very identity.
+            </p>
+            <p>
+                This is not about giving Q over to legal institutions, but about ensuring that digital truth — in a post-quantum world — is something even the law can no longer ignore.
+                This proposal aims to reinforce decentralization, not weaken it — by allowing legal systems to integrate as users, not owners.
+            </p>
+            <h2>Citation</h2>
+            <p>Please cite this document as:</p>
+            <p>Eun (via Discord) <a href="https://qcip.quantumcoin.org/qcip/qcip-12.html">"qcip-12: Notarization Infrastructure"</a>, <em>QuantumCoin Improvement Proposals</em>, 02, Jul 2025</p>
+        </div>
+    </div>
+</main><footer class="site-footer h-card">
+
+    <div class="wrapper">
+        <div class="footer-col-wrapper">
+            <div class="footer-col footer-col-2">
+                <img src="https://static.dpdocs.org/img/other/github.png" alt="QuantumCoin Github" />
+                <a href="https://github.com/quantumcoinproject/qcip"><svg class="svg-icon"><use xlink:href="https://ips.dpdocs.org/assets/minima-social-icons.svg#github"></use></svg> <span class="username">quantumcoinproject/qcip</span></a>
+            </div>
+            <div class="footer-col footer-col-3">
+                <p>QuantumCoin Improvement Proposals (QCIPs) propose standards for the QuantumCoin platform, including core protocol specifications, consensus, platform, quantum resistance etc.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body></html>
